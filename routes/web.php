@@ -3,6 +3,8 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\BukuController;
 
+use function Laravel\Prompts\search;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -24,3 +26,5 @@ Route::post('/buku', [BukuController::class, 'store'])->name('buku.store');
 Route::delete('/buku/{id}', [BukuController::class, 'destroy'])->name('buku.destroy');
 Route::get('/buku/{id}/edit', [BukuController::class, 'edit'])->name('buku.edit');
 Route::put('/buku/{id}', [BukuController::class, 'update'])->name('buku.update');
+
+Route::get('/buku/search', [BukuController::class, 'search'])->name('buku.search');

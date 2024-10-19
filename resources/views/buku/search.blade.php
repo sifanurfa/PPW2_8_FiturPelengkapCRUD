@@ -5,6 +5,9 @@
 @endsection
 
 @section('content')
+    @if(count($data_buku))
+        <div class="alert alert-success">Ditemukan <strong>{{ count($data_buku) }}</strong> data dengan kata: <strong>{{ $cari }}</strong></div>
+
     <div class="container">
         @if(Session::has('pesan'))
             <div class="alert alert-success">{{ Session::get('pesan') }}</div>
@@ -40,8 +43,10 @@
                         <td>{{ $loop->iteration }}</td>
                         <td>{{ $buku->judul }}</td>
                         <td>{{ $buku->penulis }}</td>
-                        <td>{{ "Rp. " . number_format($buku->harga, 0, ',', '.') }}</td>
+                        <td>{{ number_format($buku->harga, 0, ',', '.') }}</td>
                         <td>{{ \Carbon\Carbon::parse($buku->tgl_terbit)->Format('d/m/Y') }}</td>
+                        {{-- <td>{{ "Rp. " . number_format($buku->harga, 2, ',', '.') }}</td> --}}
+                        {{-- <td>{{ \Carbon\Carbon::parse($buku->tgl_terbit)->format('d/m/Y') }}</td> --}}
                         <td>
                             <form action="{{ route('buku.destroy', $buku->id) }}" method="POST">
                                 @csrf
@@ -61,9 +66,14 @@
             </tbody>
         </table>
 
-        <div>{{ $data_buku->links('pagination::bootstrap-5') }}</div>
+        <div>{{ $data_buku->links() }}</div>
         <div><strong>Jumlah Buku: {{ $jumlah_buku }}</strong></div>
-
-        <p>Total Harga Buku: {{ "Rp. " . number_format($total_harga, 2, ',', '.') }}</p></body>
+        <a href="/buku" class="btn btn-warning">Kembali</a></div>
     </div>
+
+@else
+    <div class="alert alert-warning"><h4>Data {{ $cari }} tidak ditemukan</h4>
+    <a href="/buku" class="btn btn-warning">Kembali</a></div>
+@endif
+
 @endsection
