@@ -1,11 +1,19 @@
-@extends('layouts.layout')
-
-@section('title')
-    <title>Books</title>
-@endsection
+@extends('auth.layouts')
 
 @section('content')
     <div class="container">
+        <div class="card-body">
+            @if ($message = Session::get('success'))
+            <div class="alert alert-success">
+                {{ $message }}
+            </div>
+            @else
+            <div class="alert alert-success">
+                You are logged in!
+            </div>
+            @endif
+        </div>
+
         @if(Session::has('pesan'))
             <div class="alert alert-success">{{ Session::get('pesan') }}</div>
         @endif
