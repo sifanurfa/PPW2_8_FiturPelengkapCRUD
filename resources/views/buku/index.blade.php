@@ -30,7 +30,9 @@
             @csrf
             <input type="text" name="kata" class="form-control my-3 mx-3" placeholder="Cari ...." style="width: 30%; display: inline; margin-top: 10px; margin-bottom: 10px; float:right;">
         </form>
+        @if (Auth::check() && Auth::user()->level == 'admin')
         <a href="{{ route('buku.create') }}" class="btn btn-primary float-end my-3">Tambah Buku</a>
+        @endif
         <table class="table table-stripped">
             <thead class="text-center">
                 <tr class="table-primary">
@@ -39,7 +41,9 @@
                     <th>Penulis</th>
                     <th>Harga</th>
                     <th>Tanggal Terbit</th>
+                    @if (Auth::check() && Auth::user()->level == 'admin')
                     <th colspan="2">Aksi</th>
+                    @endif
                 </tr>
             </thead>
             <tbody>
@@ -50,6 +54,7 @@
                         <td>{{ $buku->penulis }}</td>
                         <td>{{ "Rp. " . number_format($buku->harga, 0, ',', '.') }}</td>
                         <td>{{ \Carbon\Carbon::parse($buku->tgl_terbit)->Format('d/m/Y') }}</td>
+                        @if (Auth::check() && Auth::user()->level == 'admin')
                         <td>
                             <form action="{{ route('buku.destroy', $buku->id) }}" method="POST">
                                 @csrf
@@ -64,6 +69,7 @@
                                 <a href="{{ route('buku.edit', $buku->id) }}" class="btn btn-primary">Edit</a>
                             </form>
                         </td>
+                        @endif
                     </tr>
                 @endforeach
             </tbody>

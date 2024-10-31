@@ -7,7 +7,10 @@ use App\Models\Buku;
 
 class BukuController extends Controller
 {
-
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
     public function index()
     {
         $batas = 5;
