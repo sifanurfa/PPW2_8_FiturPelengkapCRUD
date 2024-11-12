@@ -7,10 +7,6 @@
             <div class="alert alert-success">
                 {{ $message }}
             </div>
-            @else
-            <div class="alert alert-success">
-                You are logged in!
-            </div>
             @endif
         </div>
 
@@ -50,7 +46,14 @@
                 @foreach($data_buku as $buku)
                     <tr>
                         <td>{{ $loop->iteration }}</td>
-                        <td>{{ $buku->judul }}</td>
+                        <td>
+                            @if ($buku->filepath)
+                                <div class="relative h-10 w-10">
+                                    <img src="{{ asset($buku->filepath) }}" alt="" class="h-full w-full rounded-full object-cover object-center">
+                                </div>
+                            @endif
+                            {{ $buku->judul }}
+                        </td>
                         <td>{{ $buku->penulis }}</td>
                         <td>{{ "Rp. " . number_format($buku->harga, 0, ',', '.') }}</td>
                         <td>{{ \Carbon\Carbon::parse($buku->tgl_terbit)->Format('d/m/Y') }}</td>
