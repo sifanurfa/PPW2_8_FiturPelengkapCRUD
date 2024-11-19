@@ -82,5 +82,5 @@ class BukuController extends Controller
         $buku->save();
 
         return redirect('/buku')->with('pesanEdit', 'Data Buku Berhasil Diupdate!');
-    }
+    }    
 }
