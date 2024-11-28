@@ -66,7 +66,7 @@
             </tbody>
         </table>
 
-        <div>{{ $data_buku->links() }}</div>
+        <div>{{ $data_buku->links('pagination::bootstrap-5') }}</div>
         <div><strong>Jumlah Buku: {{ $jumlah_buku }}</strong></div>
         <a href="/buku" class="btn btn-warning">Kembali</a></div>
     </div>

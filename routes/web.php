@@ -4,6 +4,7 @@ use function Laravel\Prompts\search;
 use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\BukuController;
+use App\Http\Controllers\ReviewController;
 use App\Http\Controllers\Auth\LoginRegisterController;
 
 /*
@@ -21,7 +22,7 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/buku', [BukuController::class, 'index']);
+Route::get('/buku', [BukuController::class, 'index'])->name('buku.index');
 Route::get('/buku/create', [BukuController::class, 'create'])->name('buku.create');
 Route::post('/buku', [BukuController::class, 'store'])->name('buku.store');
 Route::delete('/buku/{id}', [BukuController::class, 'destroy'])->name('buku.destroy');
@@ -37,4 +38,15 @@ Route::controller(LoginRegisterController::class)->group(function() {
     Route::post('/authenticate', 'authenticate')->name('authenticate');
     Route::get('/dashboard', 'dashboard')->name('dashboard');
     Route::post('/logout', 'logout')->name('logout');
-   });
+});
+
+Route::middleware(['auth', 'role:internal_reviewer|admin'])->group(function () {
+    Route::get('reviews/create', [ReviewController::class, 'create'])->name('reviews.create');
+    Route::post('reviews', [ReviewController::class, 'store'])->name('reviews.store');
+});
+
+// Menampilkan daftar semua reviewer
+Route::get('reviewers', [ReviewController::class, 'listReviewers'])->name('reviews.listReviewers');
+Route::get('reviewer/{id}', [ReviewController::class, 'byReviewer'])->name('reviews.byReviewer');
+Route::get('tags', [ReviewController::class, 'listTags'])->name('reviews.listTags');
+Route::get('tag/{tag}', [ReviewController::class, 'byTag'])->name('reviews.byTag');

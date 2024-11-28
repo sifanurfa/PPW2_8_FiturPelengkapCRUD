@@ -7,10 +7,6 @@
             <div class="alert alert-success">
                 {{ $message }}
             </div>
-            @else
-            <div class="alert alert-success">
-                You are logged in!
-            </div>
             @endif
         </div>
 
@@ -23,6 +19,9 @@
         @if(Session::has('pesanEdit'))
             <div class="alert alert-success">{{ Session::get('pesanEdit') }}</div>
         @endif
+        @if(Session::has('review'))
+            <div class="alert alert-success">{{ Session::get('review') }}</div>
+        @endif
 
         <h2 class="text-center mt-3">Daftar Buku</h2>
 
@@ -30,9 +29,17 @@
             @csrf
             <input type="text" name="kata" class="form-control my-3 mx-3" placeholder="Cari ...." style="width: 30%; display: inline; margin-top: 10px; margin-bottom: 10px; float:right;">
         </form>
+
         @if (Auth::check() && Auth::user()->level == 'admin')
         <a href="{{ route('buku.create') }}" class="btn btn-primary float-end my-3">Tambah Buku</a>
         @endif
+        @if (Auth::check() && (Auth::user()->level == 'admin' || Auth::user()->level == 'internal_reviewer'))
+        <a href="{{ route('reviews.create') }}" class="btn btn-warning float-end my-3 me-3">Review Buku</a>
+        @endif
+
+        <a href="{{ route('reviews.listTags') }}" class="btn btn-success float-end my-3 me-3">Review by Tag</a>
+        <a href="{{ route('reviews.listReviewers') }}" class="btn btn-info float-end my-3 me-3">Review by Reviewer</a>
+
         <table class="table table-stripped">
             <thead class="text-center">
                 <tr class="table-primary">

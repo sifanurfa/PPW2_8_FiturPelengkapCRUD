@@ -12,4 +12,9 @@ class Buku extends Model
 
     protected $table = 'books';
     protected $dates = ['tgl_terbit'];
+
+    public function reviews()
+    {
+        return $this->hasMany(Review::class);
+    }
 }

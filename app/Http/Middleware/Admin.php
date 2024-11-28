@@ -11,7 +11,7 @@ class Admin
 {
     public function handle(Request $request, Closure $next): Response
     {
-        if (!Auth::user()->level == 'admin') {
+        if (!in_array(Auth::user()->level, ['admin', 'internal_reviewer'])) {
             return redirect()->back();
         }
         return $next($request);
