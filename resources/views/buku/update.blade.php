@@ -36,6 +36,20 @@
                 <label for="tgl_terbit" class="form-label">Tanggal Terbit</label>
                 <input type="date" class="date form-control" id="tgl_terbit" name="tgl_terbit" value="{{ $buku->tgl_terbit }}">
             </div>
+            <div class="mb-3">
+                <label for="discount" class="form-label">Diskon (%)</label>
+                <input type="number" class="form-control" id="discount" name="discount" value="{{ $buku->discount }}" min="0" max="100">
+            </div>
+    {{-- <div class="form-group">
+        <label for="discount">Diskon (%)</label>
+        <input type="number" name="discount" id="discount" class="form-control"
+               value="{{ old('discount', $book->discount) }}" min="0" max="100">
+    </div> --}}
+
+            <div class="mb-3">
+                <label for="editorial_pick">Editorial Pick</label>
+                <input type="checkbox" name="editorial_pick" id="editorial_pick" value="1" {{ old('editorial_pick', $book->editorial_pick ?? false) ? 'checked' : '' }}>
+            </div>
             <button type="submit" class="btn btn-primary">Simpan</button>
             <a href="{{ '/buku' }}" class="btn btn-danger">Kembali</a>
         </form>

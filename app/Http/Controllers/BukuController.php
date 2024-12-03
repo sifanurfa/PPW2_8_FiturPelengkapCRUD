@@ -18,7 +18,8 @@ class BukuController extends Controller
         $data_buku = Buku::orderBy('id', 'desc')->paginate($batas);
         $no = $batas * ($data_buku->currentPage() - 1);
         $total_harga = Buku::sum('harga');
-        return view('buku.index', compact('data_buku', 'no', 'jumlah_buku', 'total_harga'));
+        $editorial_picks = Buku::where('editorial_pick', true)->take(5)->get();
+        return view('buku.index', compact('editorial_picks','data_buku', 'no', 'jumlah_buku', 'total_harga'));
     }
 
     public function search(Request $request)
@@ -71,6 +72,8 @@ class BukuController extends Controller
             'penulis' => 'required|string|max:30',
             'harga' => 'required|numeric',
             'tgl_terbit' => 'required|date',
+            'editorial_pick' => 'boolean',
+            'discount' => 'nullable|integer|min:0|max:100',
         ]);
 
         $buku = Buku::find($id);
@@ -79,6 +82,8 @@ class BukuController extends Controller
         $buku->penulis = $request->penulis;
         $buku->harga = $request->harga;
         $buku->tgl_terbit = $request->tgl_terbit;
+        $buku->editorial_pick = $request->has('editorial_pick') ? 1 : 0;
+        $buku->discount = $request->discount;
         $buku->save();
 
         return redirect('/buku')->with('pesanEdit', 'Data Buku Berhasil Diupdate!');

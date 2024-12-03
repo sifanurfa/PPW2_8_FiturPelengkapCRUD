@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\BukuController;
 use App\Http\Controllers\ReviewController;
 use App\Http\Controllers\Auth\LoginRegisterController;
+use App\Http\Controllers\GalleryController;
 
 /*
 |--------------------------------------------------------------------------
@@ -39,6 +40,8 @@ Route::controller(LoginRegisterController::class)->group(function() {
     Route::get('/dashboard', 'dashboard')->name('dashboard');
     Route::post('/logout', 'logout')->name('logout');
 });
+
+Route::resource('gallery', GalleryController::class);
 
 Route::middleware(['auth', 'role:internal_reviewer|admin'])->group(function () {
     Route::get('reviews/create', [ReviewController::class, 'create'])->name('reviews.create');
