@@ -37,6 +37,7 @@
         <a href="{{ route('reviews.create') }}" class="btn btn-warning float-end my-3 me-3">Review Buku</a>
         @endif
 
+        <a href="{{ route('books.myfavourites') }}" class="btn btn-primary float-end my-3 me-3">Buku Favoritku</a>
         <a href="{{ route('reviews.listTags') }}" class="btn btn-success float-end my-3 me-3">Review by Tag</a>
         <a href="{{ route('reviews.listReviewers') }}" class="btn btn-info float-end my-3 me-3">Review by Reviewer</a>
 
@@ -49,7 +50,7 @@
                     <th>Harga</th>
                     <th>Tanggal Terbit</th>
                     @if (Auth::check() && Auth::user()->level == 'admin')
-                    <th colspan="2">Aksi</th>
+                    <th colspan="3">Aksi</th>
                     @endif
                 </tr>
             </thead>
@@ -77,6 +78,11 @@
                             </form>
                         </td>
                         @endif
+                        <td>
+                            {{-- <form action="{{ route('buku.update', $buku->id) }}" method="POST"> --}}
+                                <a href="{{ route('books.detail', $buku->id) }}" class="btn btn-primary">Detail</a>
+                            {{-- </form> --}}
+                        </td>
                     </tr>
                 @endforeach
             </tbody>

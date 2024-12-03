@@ -4,7 +4,9 @@ use function Laravel\Prompts\search;
 use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\BukuController;
+use App\Http\Controllers\RatingController;
 use App\Http\Controllers\ReviewController;
+use App\Http\Controllers\FavouriteController;
 use App\Http\Controllers\Auth\LoginRegisterController;
 
 /*
@@ -50,3 +52,16 @@ Route::get('reviewers', [ReviewController::class, 'listReviewers'])->name('revie
 Route::get('reviewer/{id}', [ReviewController::class, 'byReviewer'])->name('reviews.byReviewer');
 Route::get('tags', [ReviewController::class, 'listTags'])->name('reviews.listTags');
 Route::get('tag/{tag}', [ReviewController::class, 'byTag'])->name('reviews.byTag');
+
+
+// fitur rating
+Route::middleware(['auth'])->group(function () {
+    Route::post('/books/{book}/rate', [RatingController::class, 'store'])->name('books.rate');
+    Route::get('/books/{book}', [RatingController::class, 'show'])->name('books.detail');
+});
+
+// favourite
+Route::middleware('auth')->group(function () {
+    Route::post('/books/{id}/favourite', [FavouriteController::class, 'addToFavourite'])->name('books.favourite');
+    Route::get('/buku/myfavourite', [FavouriteController::class, 'myFavourites'])->name('books.myfavourites');
+});

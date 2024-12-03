@@ -17,4 +17,14 @@ class Buku extends Model
     {
         return $this->hasMany(Review::class);
     }
+
+    public function ratings()
+    {
+        return $this->hasMany(Rating::class, 'book_id');
+    }
+    public function favouritedBy()
+{
+    return $this->belongsToMany(User::class, 'favourite_books', 'book_id', 'user_id')->withTimestamps();
+}
+
 }
